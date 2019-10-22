@@ -1,0 +1,126 @@
+#!/usr/bin/env python3
+
+def menu():
+    print("==============================================================")
+    print("\t\t Baseball Team Manager")
+    print("MENU OPTIONS")
+    print("1 - Display lineup")
+    print("2 - Add player")
+    print("3 - Remove player")
+    print("4 - Move player")
+    print("5 - Edit player position")
+    print("6 - Edit player stats")
+    print("7 - Exit program")
+    print()
+    print("POSITIONS")
+    print("C, 1B, 2B, 3B, SS, LF, CF, RF, P")
+    print("==============================================================")
+
+def display(players_list):
+    if len(players_list) == 0:
+        print("There are no players.\n")
+        return
+    else:
+        counter = 0
+        print("   Player" + "\tPOS" + "\tAB" + "\tH" + "\tAVG")
+        print("--------------------------------------------------------------")
+        for player in players_list:
+            print(str(counter + 1) + "  " + player[0] + "\t\t" + player[1] + "\t" \
+                  + str(player[2]) + "\t" + str(player[3]) + "\t" + str(player[4]))
+            counter += 1
+        print()
+
+def add(players_list):
+    name = str(input("Name: "))
+    position = input("Position: ")
+    at_bats = int(input("At bats: "))
+    hits = int(input("Hits: "))
+    player = []
+    player.append(name)
+    player.append(position)
+    player.append(at_bats)
+    player.append(hits)
+    players_list.append(player)
+    print(player[0], "was added.")
+    print()
+
+def remove(players_list):
+    number = int(input("Remove player number: "))
+    if number < 1 or number > len(players_list):
+        print("Invalid player number.")
+    else:
+        player = players_list.pop(number - 1)
+        print(player[0], "was deleted.")
+    print()
+
+
+#look at the spefication, we need to make it so it tells us the player was selected after we enter in the current lineup number
+def move(players_list):
+    number = int(input("Current lineup number: "))
+    #right here, it should say that if you wrote 1 that joe is selected.
+    #"Joe was selected"
+    #Then it moves to the promp New lineup
+    move_to = int(input("New lineup number: "))
+    if number < 1 or number > len(players_list):
+        print("Invalid player number.")
+    else:
+        player = players_list.pop(number - 1)
+        player_move = players_list.insert(move_to -1, player)
+        print(player[0], "was moved.")
+    print()
+
+
+#my brain hurts, please look at this
+def edit_position(players_list):
+    number = int(input("Edit player number position: "))
+    new_position = input("Please write new position: ")
+    if number < 1 or number > len(players_list):
+        print("Invalid player number.")
+    else:
+        player = players_list.pop(number - 1)
+        player_remove = players_list.remove(player[1])
+        player_update = players_list.insert(new_position, player)
+        print(player[0], "new position is ", player[1], ".")
+    print()
+
+#def edit_stat(players_list):
+
+
+def main():
+    players_list = [["Joe", "P", 10, 2, 0.2],
+                    ["Tom", "SS", 11, 4, 0.364],
+                    ["Ben", "3B", 0, 0, 0.0],
+                    ["Mike", "C", 0, 0, 0.0]]
+
+#It asks us to use a tuple to store all valid positions. ?????????????
+    position = ("C", "1B", "2B", "3B", "SS", "LF", "CF", "RF", "P")
+    menu()
+    print()
+
+    done = False
+    while not done:
+        menu_option = int(input("Menu option: "))
+        print()
+
+        if menu_option == 1:
+            display(players_list)
+        elif menu_option == 2:
+            add(players_list)
+        elif menu_option == 3:
+            remove(players_list)
+        elif menu_option == 4:
+            move(players_list)
+        elif menu_option == 5:
+            edit_position(players_list)
+        elif menu_option == 6:
+            edit_stat(players_list)
+        elif menu_option == 7:
+            print("Bye!")
+            done = True
+        else:
+            print("Error. Please select a valid option.")
+            print()
+
+if __name__ == "__main__":
+    main()
+print()
